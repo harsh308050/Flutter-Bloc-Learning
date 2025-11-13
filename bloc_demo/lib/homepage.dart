@@ -104,17 +104,54 @@ class _HomePageState extends State<HomePage> {
       //     },
       //   ),
       // ),
-      body: BlocBuilder<UserBloc, UserStates>(
+      // body: BlocBuilder<UserBloc, UserStates>(
+      //   bloc: userBloc,
+      //   builder: (context, state) {
+      //     if (state is UserLoadingState) {
+      //       return CircularProgressIndicator();
+      //     } else if (state is UserLoadedState) {
+      //       final list = state.users.data;
+      //       return ListView.builder(
+      //         itemCount: list!.length,
+      //         itemBuilder: (context, index) {
+      //           final item = list[index];
+      //           final attr = item.attributes;
+
+      //           return Column(
+      //             children: [
+      //               Text(
+      //                 attr!.name ?? "",
+      //                 style: TextStyle(
+      //                   fontWeight: FontWeight.bold,
+      //                   fontSize: 16,
+      //                   color: Colors.black,
+      //                 ),
+      //               ),
+      //               SizedBox(height: 10),
+      //             ],
+      //           );
+      //         },
+      //       );
+      //     }
+
+      //     return Container();
+      //   },
+      // ),
+      body: BlocListener<UserBloc, UserStates>(
+        listener: (context, state) {
+          if (state is UserSuccessState) {
+            userModel = state.users;
+          }
+        },
         bloc: userBloc,
-        builder: (context, state) {
-          if (state is UserLoadingState) {
-            return CircularProgressIndicator();
-          } else if (state is UserLoadedState) {
-            final list = state.users.data;
+        child: BlocBuilder(
+          bloc: userBloc,
+          builder: (context, state) {
+            final list = userModel?.data;
             return ListView.builder(
-              itemCount: list!.length,
+              itemCount: list?.length,
               itemBuilder: (context, index) {
-                final item = list[index];
+                final item = list![index];
                 final attr = item.attributes;
 
                 return Column(
@@ -132,14 +169,10 @@ class _HomePageState extends State<HomePage> {
                 );
               },
             );
-          }
-
-          return Container();
-        },
+          },
+        ),
       ),
     );
-
-    // );
   }
 }
 

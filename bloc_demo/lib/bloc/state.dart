@@ -19,11 +19,11 @@ abstract class UserStates {}
 
 class UserInitialState extends UserStates {}
 
-class UserLoadingState extends UserStates {}
+class UserBusyState extends UserStates {}
 
-class UserLoadedState extends UserStates {
+class UserSuccessState extends UserStates {
   final UserModel users;
-  UserLoadedState(this.users);
+  UserSuccessState(this.users);
 }
 
 class UserErrorState extends UserStates {
