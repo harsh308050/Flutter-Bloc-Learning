@@ -79,12 +79,15 @@ class _HomepageState extends State<Homepage> {
                           spacing: 10,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Center(
-                              child: Image.network(
-                                list[index].thumbnail ?? '',
-                                width: 70,
-                                height: 70,
-                                fit: BoxFit.cover,
+                            Hero(
+                              tag: '${list[index].id}',
+                              child: Center(
+                                child: Image.network(
+                                  list[index].thumbnail ?? '',
+                                  width: 70,
+                                  height: 70,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                             Expanded(

@@ -18,6 +18,7 @@ class Productdetails extends StatefulWidget {
 class _ProductdetailsState extends State<Productdetails> {
   final DataBloc dataBloc = DataBloc(Repository(DataSource()));
   Products? product;
+  bool showMore = false;
 
   @override
   void initState() {
@@ -59,11 +60,14 @@ class _ProductdetailsState extends State<Productdetails> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.network(
-                            product?.thumbnail ?? '',
-                            width: 200,
-                            height: 200,
-                            fit: BoxFit.cover,
+                          Hero(
+                            tag: '${product?.id}',
+                            child: Image.network(
+                              product?.thumbnail ?? '',
+                              width: 200,
+                              height: 200,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                           const SizedBox(height: 20),
 
@@ -96,12 +100,44 @@ class _ProductdetailsState extends State<Productdetails> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const SizedBox(height: 10),
                               Text(
                                 product?.description ?? '',
                                 textAlign: TextAlign.justify,
                                 style: const TextStyle(fontSize: 16),
                               ),
+                              // AnimatedCrossFade(
+                              //   firstChild: Text(
+                              //     product?.description ?? '',
+                              //     maxLines: 3,
+                              //     overflow: TextOverflow.ellipsis,
+                              //     textAlign: TextAlign.justify,
+                              //     style: const TextStyle(fontSize: 16),
+                              //   ),
+                              //   secondChild: Text(
+                              //     product?.description ?? '',
+                              //     textAlign: TextAlign.justify,
+                              //     style: const TextStyle(fontSize: 16),
+                              //   ),
+                              //   crossFadeState: showMore
+                              //       ? CrossFadeState.showSecond
+                              //       : CrossFadeState.showFirst,
+                              //   duration: Duration(milliseconds: 300),
+                              // ),
+                              // SizedBox(height: 5),
+                              // GestureDetector(
+                              //   onTap: () {
+                              //     setState(() {
+                              //       showMore = !showMore;
+                              //     });
+                              //   },
+                              //   child: Text(
+                              //     showMore ? "See Less" : "See More",
+                              //     style: TextStyle(
+                              //       color: Colors.blue,
+                              //       fontWeight: FontWeight.bold,
+                              //     ),
+                              //   ),
+                              // ),
                               const SizedBox(height: 10),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
