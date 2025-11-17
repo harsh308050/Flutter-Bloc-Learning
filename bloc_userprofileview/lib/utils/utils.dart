@@ -20,6 +20,7 @@ class UIStrings {
   static String lname = "Last Name";
   static String age = "Age";
   static String gender = "Gender";
+  static String searchbarHint = "Search by name or email...";
 
   static String loginButton = "Log In";
   static String signupButton = "Create Account";
@@ -30,11 +31,15 @@ class UIStrings {
   static String appbarEditProfile = "Edit Profile";
   static String appbarUsers = "Users";
   static String appbarSettings = "Settings";
+  static String tileProfile = "Profile";
+  static String tileTheme = "Theme";
+  static String tileLogout = "Logout";
+  static String tileDelete = "Delete Account";
 }
 
 class UIColours {
   static Color primaryColor = const Color(0xFF4a90e2);
-  static Color grey = const Color(0xFF727272);
+  static Color grey = const Color.fromRGBO(114, 114, 114, 0.7);
   static Color black = Colors.black;
   static Color white = Colors.white;
   static Color greyShade = Colors.grey.shade600;
@@ -56,6 +61,9 @@ class UISizes {
   static double verticalInputPadding = 15.0;
   static double horizontalInputPadding = 18.0;
   static double appbarHeight = 56.0;
+  static double tileTitle = 18.0;
+  static double tileSubtitle = 14.0;
+  static double trailIconSize = 16.0;
 }
 
 class UIIcons {
@@ -70,6 +78,12 @@ class UIIcons {
   static Icon passwordEyeDisabledIcon = const Icon(
     Icons.visibility_off_outlined,
   );
+  static Icon arrowBtnIcon = Icon(
+    Icons.arrow_forward_ios_outlined,
+    size: UISizes.trailIconSize,
+  );
+  static Icon dltBtnIcon = Icon(Icons.delete_outlined, color: UIColours.red);
+  static Icon tileThemeIcon = Icon(Icons.brightness_6_outlined);
   static Icon fnameIcon = const Icon(Icons.person);
   static Icon lnameIcon = const Icon(Icons.person);
   static Icon ageIcon = const Icon(Icons.cake);

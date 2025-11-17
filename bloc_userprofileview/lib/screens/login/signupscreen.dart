@@ -94,7 +94,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               Container(
                                 height: 60,
                                 decoration: BoxDecoration(
-                                  color: Colors.grey[200],
+                                  color: UIColours.grey.withOpacity(0.1),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Row(
