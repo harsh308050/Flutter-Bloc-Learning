@@ -1,0 +1,77 @@
+import 'package:flutter/material.dart';
+
+class UIStrings {
+  static String loginTitle = "Log in to your account";
+  static String signupTitle = "Create your account";
+  static String signupSubTitle = "Join our community and get started";
+  static String newOnApp = "New to Our App?";
+  static String haveAccount = "Already have an account?";
+
+  static String emailHint = "Enter your email";
+  static String passwordHint = "Enter your password";
+  static String fnameHint = "John";
+  static String lnameHint = "Doe";
+  static String ageHint = "eg. 25";
+  static String emailformatHint = "you@example.com";
+  static String passwordformatHint = "Enter a Strong Password";
+  static String emailLabel = "Email";
+  static String passwordLabel = "Password";
+  static String fname = "First Name";
+  static String lname = "Last Name";
+  static String age = "Age";
+  static String gender = "Gender";
+
+  static String loginButton = "Log In";
+  static String signupButton = "Create Account";
+  static String editprofileButton = "Save Changes";
+  static String forgotPassword = "Forgot Password?";
+
+  static String appbarUserDetails = "User Details";
+  static String appbarEditProfile = "Edit Profile";
+  static String appbarUsers = "Users";
+  static String appbarSettings = "Settings";
+}
+
+class UIColours {
+  static Color primaryColor = const Color(0xFF4a90e2);
+  static Color grey = const Color(0xFF727272);
+  static Color black = Colors.black;
+  static Color white = Colors.white;
+  static Color greyShade = Colors.grey.shade600;
+  static Color red = Colors.red;
+}
+
+class UISizes {
+  static double titleFontSize = 24.0;
+  static double subtitleFontSize = 16.0;
+  static double btnFontSize = 18.0;
+  static double labelFontSize = 14.0;
+  static double inputFontSize = 16.0;
+  static double mainSpacing = 24.0;
+  static double midSpacing = 20.0;
+  static double subSpacing = 18.0;
+  static double minSpacing = 10.0;
+  static double inputRadius = 10.0;
+  static double aroundPadding = 20.0;
+  static double verticalInputPadding = 15.0;
+  static double horizontalInputPadding = 18.0;
+  static double appbarHeight = 56.0;
+}
+
+class UIIcons {
+  static Icon logoIcon = const Icon(
+    Icons.settings,
+    size: 50,
+    color: Colors.white,
+  );
+  static Icon emailIcon = const Icon(Icons.email_outlined);
+  static Icon passwordIcon = const Icon(Icons.lock_outline);
+  static Icon passwordEyeIcon = const Icon(Icons.visibility_outlined);
+  static Icon passwordEyeDisabledIcon = const Icon(
+    Icons.visibility_off_outlined,
+  );
+  static Icon fnameIcon = const Icon(Icons.person);
+  static Icon lnameIcon = const Icon(Icons.person);
+  static Icon ageIcon = const Icon(Icons.cake);
+  static Icon genderIcon = const Icon(Icons.wc);
+}
