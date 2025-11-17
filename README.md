@@ -457,15 +457,9 @@ Contributions are welcome! Feel free to:
 
 ---
 
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
----
-
 ## 👨‍💻 Author
 
-**Harsh Patel**  
+**Harsh Parmar**  
 GitHub: [@harsh308050](https://github.com/harsh308050)
 
 ---
@@ -479,10 +473,6 @@ GitHub: [@harsh308050](https://github.com/harsh308050)
 
 ---
 
-## 🎉 Happy Learning!
-
-If this repository helped you learn BLoC, please consider giving it a ⭐ star!
-
 ### Quick Start Commands:
 ```bash
 # Clone and run counter app
@@ -493,5 +483,3 @@ flutter run
 ```
 
 ---
-
-**Made with ❤️ and Flutter**
