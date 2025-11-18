@@ -68,9 +68,6 @@ class _SignupScreenState extends State<SignupScreen> {
                                 : AssetsPath.profile,
                             child: Container(
                               padding: EdgeInsets.all(4),
-                              child: image != null
-                                  ? UIIcons.editIcon
-                                  : UIIcons.addIcon,
                               decoration: BoxDecoration(
                                 border: Border.all(
                                   color: UIColours.white,
@@ -79,6 +76,9 @@ class _SignupScreenState extends State<SignupScreen> {
                                 color: UIColours.primaryColor,
                                 borderRadius: BorderRadius.circular(20),
                               ),
+                              child: image != null
+                                  ? UIIcons.editIcon
+                                  : UIIcons.addIcon,
                             ),
                           ),
                           Row(
