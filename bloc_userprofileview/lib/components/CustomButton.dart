@@ -16,7 +16,7 @@ class CustomButton extends StatelessWidget {
       onPressed: onButtonPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: UIColours.primaryColor,
-        minimumSize: Size(double.infinity, 50),
+        minimumSize: Size(double.infinity, UISizes.btnHeight),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(UISizes.inputRadius),
         ),

@@ -22,7 +22,7 @@ class UIStrings {
   static String gender = "Gender";
   static String searchbarHint = "Search by name or email...";
 
-  static String loginButton = "Log In";
+  static String loginButton = "Login";
   static String signupButton = "Create Account";
   static String editprofileButton = "Save Changes";
   static String forgotPassword = "Forgot Password?";
@@ -39,11 +39,11 @@ class UIStrings {
 
 class UIColours {
   static Color primaryColor = const Color(0xFF4a90e2);
-  static Color grey = const Color.fromRGBO(114, 114, 114, 0.7);
+  static Color grey = const Color(0xB3727272);
   static Color black = Colors.black;
   static Color white = Colors.white;
   static Color greyShade = Colors.grey.shade600;
-  static Color red = Colors.red;
+  static Color errorColor = Colors.red;
 }
 
 class UISizes {
@@ -52,10 +52,10 @@ class UISizes {
   static double btnFontSize = 18.0;
   static double labelFontSize = 14.0;
   static double inputFontSize = 16.0;
-  static double mainSpacing = 24.0;
-  static double midSpacing = 20.0;
-  static double subSpacing = 18.0;
-  static double minSpacing = 10.0;
+  static double mainSpacing = 20.0;
+  static double midSpacing = 18.0;
+  static double subSpacing = 10.0;
+  static double minSpacing = 8.0;
   static double inputRadius = 10.0;
   static double aroundPadding = 20.0;
   static double verticalInputPadding = 15.0;
@@ -64,6 +64,7 @@ class UISizes {
   static double tileTitle = 18.0;
   static double tileSubtitle = 14.0;
   static double trailIconSize = 16.0;
+  static double btnHeight = 45.0;
 }
 
 class UIIcons {
@@ -74,18 +75,42 @@ class UIIcons {
   );
   static Icon emailIcon = const Icon(Icons.email_outlined);
   static Icon passwordIcon = const Icon(Icons.lock_outline);
-  static Icon passwordEyeIcon = const Icon(Icons.visibility_outlined);
+  static Icon passwordEyeIcon = Icon(
+    Icons.visibility_outlined,
+    color: UIColours.grey,
+  );
   static Icon passwordEyeDisabledIcon = const Icon(
     Icons.visibility_off_outlined,
+    color: Colors.grey,
   );
+  static Icon settingsIcon = const Icon(Icons.settings_outlined);
   static Icon arrowBtnIcon = Icon(
     Icons.arrow_forward_ios_outlined,
     size: UISizes.trailIconSize,
   );
-  static Icon dltBtnIcon = Icon(Icons.delete_outlined, color: UIColours.red);
+  static Icon dltBtnIcon = Icon(
+    Icons.delete_outlined,
+    color: UIColours.errorColor,
+  );
+
+  static Icon addIcon = Icon(
+    Icons.add_outlined,
+    color: UIColours.white,
+    size: 17,
+  );
+  static Icon editIcon = Icon(
+    Icons.edit_outlined,
+    color: UIColours.white,
+    size: 17,
+  );
+
   static Icon tileThemeIcon = Icon(Icons.brightness_6_outlined);
   static Icon fnameIcon = const Icon(Icons.person);
   static Icon lnameIcon = const Icon(Icons.person);
   static Icon ageIcon = const Icon(Icons.cake);
   static Icon genderIcon = const Icon(Icons.wc);
+}
+
+class AssetsPath {
+  static String profile = "assets/images/profile.png";
 }

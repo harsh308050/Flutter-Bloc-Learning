@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:bloc_userprofileview/components/CM.dart';
 import 'package:bloc_userprofileview/components/CustomAppBar.dart';
+import 'package:bloc_userprofileview/components/CustomProfile.dart';
 import 'package:bloc_userprofileview/components/GenderButton.dart';
 import 'package:bloc_userprofileview/routes/routes.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +10,7 @@ import '../../utils/utils.dart';
 import '../../components/CustomButton.dart';
 import '../../components/CustomTextButton.dart';
 import '../../components/CustomTextField.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -16,6 +21,8 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   final formKey = GlobalKey<FormState>();
+  final ImagePicker picker = ImagePicker();
+  File? image;
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController ageController = TextEditingController();
@@ -44,27 +51,66 @@ class _SignupScreenState extends State<SignupScreen> {
                       Column(
                         spacing: UISizes.subSpacing,
                         children: [
-                          CustomTextfield(
-                            controller: firstNameController,
-                            hintText: UIStrings.fnameHint,
-                            labelText: UIStrings.fname,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your first name';
-                              }
-                              return null;
+                          CustomProfile(
+                            onTap: () {
+                              CM.pickImage(ImageSource.gallery, picker).then((
+                                file,
+                              ) async {
+                                if (file != null) {
+                                  setState(() {
+                                    image = file;
+                                  });
+                                }
+                              });
                             },
+                            imagePath: image != null
+                                ? image!.path
+                                : AssetsPath.profile,
+                            child: Container(
+                              padding: EdgeInsets.all(4),
+                              child: image != null
+                                  ? UIIcons.editIcon
+                                  : UIIcons.addIcon,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: UIColours.white,
+                                  width: 2,
+                                ),
+                                color: UIColours.primaryColor,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                            ),
                           ),
-                          CustomTextfield(
-                            controller: lastNameController,
-                            hintText: UIStrings.lnameHint,
-                            labelText: UIStrings.lname,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your last name';
-                              }
-                              return null;
-                            },
+                          Row(
+                            spacing: UISizes.subSpacing,
+                            children: [
+                              Expanded(
+                                child: CustomTextfield(
+                                  controller: firstNameController,
+                                  hintText: UIStrings.fnameHint,
+                                  labelText: UIStrings.fname,
+                                  validator: (value) {
+                                    return CM.inputvalidator(
+                                      value,
+                                      "First Name",
+                                    );
+                                  },
+                                ),
+                              ),
+                              Expanded(
+                                child: CustomTextfield(
+                                  controller: lastNameController,
+                                  hintText: UIStrings.lnameHint,
+                                  labelText: UIStrings.lname,
+                                  validator: (value) {
+                                    return CM.inputvalidator(
+                                      value,
+                                      "Last Name",
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
                           ),
                           CustomTextfield(
                             controller: ageController,
@@ -72,14 +118,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             labelText: UIStrings.age,
                             keyboardType: TextInputType.number,
                             validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your age';
-                              }
-                              if (value.length > 3 ||
-                                  int.tryParse(value) == null) {
-                                return 'Please enter a valid age';
-                              }
-                              return null;
+                              return CM.inputvalidator(value, "Age");
                             },
                           ),
                           Column(
@@ -130,15 +169,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             hintText: UIStrings.emailHint,
                             labelText: UIStrings.emailLabel,
                             validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your email';
-                              }
-                              if (!RegExp(
-                                r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-                              ).hasMatch(value)) {
-                                return 'Please enter a valid email';
-                              }
-                              return null;
+                              return CM.inputvalidator(value, "Email");
                             },
                           ),
                           CustomTextfield(
@@ -146,18 +177,13 @@ class _SignupScreenState extends State<SignupScreen> {
                             hintText: UIStrings.passwordHint,
                             labelText: UIStrings.passwordLabel,
                             validator: (value) {
-                              if (value == null) {
-                                return 'Please enter your password';
-                              }
-                              if (value.length < 3) {
-                                return 'Password must be at least 3 characters';
-                              }
-                              return null;
+                              return CM.inputvalidator(value, "Password");
                             },
                           ),
                         ],
                       ),
-                      SizedBox(height: UISizes.mainSpacing * 2),
+                      CM.SbhMain(),
+                      CM.SbhMain(),
                       CustomButton(
                         buttonText: UIStrings.signupButton,
                         onButtonPressed: () {
@@ -166,7 +192,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           }
                         },
                       ),
-                      SizedBox(height: UISizes.minSpacing),
+                      CM.SbhMin(),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

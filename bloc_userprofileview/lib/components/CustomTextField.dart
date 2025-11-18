@@ -61,6 +61,16 @@ class CustomTextfield extends StatelessWidget {
               onPressed: onSuffixPressed,
               icon: Icon(suffixIcon),
             ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(UISizes.inputRadius),
+              ),
+              borderSide: BorderSide(color: UIColours.errorColor),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(UISizes.inputRadius),
+              borderSide: BorderSide(color: UIColours.errorColor),
+            ),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: UIColours.grey.withOpacity(0.5)),
               borderRadius: BorderRadius.circular(UISizes.inputRadius),
