@@ -3,7 +3,14 @@ import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatefulWidget {
   final String appbarTitle;
-  const CustomAppBar({super.key, required this.appbarTitle});
+  final Widget? suffixIcon;
+  final bool? isCenter;
+  const CustomAppBar({
+    super.key,
+    required this.appbarTitle,
+    this.suffixIcon,
+    this.isCenter,
+  });
 
   @override
   State<CustomAppBar> createState() => _CustomAppBarState();
@@ -15,7 +22,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
     return AppBar(
       backgroundColor: UIColours.white,
       forceMaterialTransparency: true,
-      centerTitle: true,
+      actions: widget.suffixIcon != null ? [widget.suffixIcon!] : [],
+      centerTitle: widget.isCenter ?? true,
       title: Padding(
         padding: const EdgeInsets.all(18.0),
         child: Text(

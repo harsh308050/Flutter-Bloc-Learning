@@ -32,9 +32,13 @@ class UIStrings {
   static String appbarUsers = "Users";
   static String appbarSettings = "Settings";
   static String tileProfile = "Profile";
+  static String settingsGeneral = "GENERAL";
+  static String settingsAccount = "ACCOUNT";
   static String tileTheme = "Theme";
   static String tileLogout = "Logout";
   static String tileDelete = "Delete Account";
+
+  static String loginFailed = "Login failed. Please check your credentials.";
 }
 
 class UIColours {
@@ -104,8 +108,16 @@ class UIIcons {
     size: 17,
   );
 
+  static Icon filter = Icon(
+    Icons.tune_outlined,
+    color: UIColours.greyShade,
+    size: 25,
+  );
+
   static Icon tileThemeIcon = Icon(Icons.brightness_6_outlined);
   static Icon fnameIcon = const Icon(Icons.person);
+  static Icon logout = const Icon(Icons.logout);
+  static Icon bottomappbarUser = const Icon(Icons.group_outlined);
   static Icon lnameIcon = const Icon(Icons.person);
   static Icon ageIcon = const Icon(Icons.cake);
   static Icon genderIcon = const Icon(Icons.wc);

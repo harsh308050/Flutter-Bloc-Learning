@@ -32,7 +32,7 @@ class _GenderbuttonState extends State<Genderbutton> {
             : UIColours.white.withOpacity(0),
         borderRadius: BorderRadius.circular(10),
       ),
-      child: InkWell(
+      child: GestureDetector(
         onTap: widget.onGenderChanged,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

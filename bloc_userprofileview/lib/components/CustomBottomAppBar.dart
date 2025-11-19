@@ -11,14 +11,23 @@ class CustomBottomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       currentIndex: currentIndex,
-      showUnselectedLabels: false,
       backgroundColor: UIColours.white,
       selectedItemColor: UIColours.primaryColor,
+      selectedLabelStyle: TextStyle(
+        fontSize: UISizes.labelFontSize,
+        fontWeight: FontWeight.w600,
+      ),
+      selectedFontSize: UISizes.btnFontSize,
+      unselectedFontSize: UISizes.btnFontSize,
+      unselectedLabelStyle: TextStyle(
+        fontSize: UISizes.labelFontSize,
+        fontWeight: FontWeight.w400,
+      ),
       unselectedItemColor: UIColours.grey,
       onTap: onTap != null ? (index) => onTap!(index) : null,
       items: [
         BottomNavigationBarItem(
-          icon: UIIcons.fnameIcon,
+          icon: UIIcons.bottomappbarUser,
           label: UIStrings.appbarUsers,
         ),
         BottomNavigationBarItem(

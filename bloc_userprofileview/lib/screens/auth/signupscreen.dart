@@ -1,11 +1,12 @@
 import 'dart:io';
-
 import 'package:bloc_userprofileview/components/CM.dart';
 import 'package:bloc_userprofileview/components/CustomAppBar.dart';
 import 'package:bloc_userprofileview/components/CustomProfile.dart';
 import 'package:bloc_userprofileview/components/GenderButton.dart';
 import 'package:bloc_userprofileview/routes/routes.dart';
 import 'package:flutter/material.dart';
+import '../../components/CustomBottomSheet.dart';
+import '../../components/CustomTile.dart';
 import '../../utils/utils.dart';
 import '../../components/CustomButton.dart';
 import '../../components/CustomTextButton.dart';
@@ -53,15 +54,65 @@ class _SignupScreenState extends State<SignupScreen> {
                         children: [
                           CustomProfile(
                             onTap: () {
-                              CM.pickImage(ImageSource.gallery, picker).then((
-                                file,
-                              ) async {
-                                if (file != null) {
-                                  setState(() {
-                                    image = file;
-                                  });
-                                }
-                              });
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return ListView(
+                                    shrinkWrap: true,
+                                    padding: EdgeInsets.all(
+                                      UISizes.aroundPadding,
+                                    ),
+                                    children: [
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          CustomTile(
+                                            leadingIcon: Icon(
+                                              Icons.photo_library,
+                                            ),
+                                            title: "Choose From Gallery",
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                              CM
+                                                  .pickImage(
+                                                    ImageSource.gallery,
+                                                    picker,
+                                                  )
+                                                  .then((file) async {
+                                                    if (file != null) {
+                                                      setState(() {
+                                                        image = file;
+                                                      });
+                                                    }
+                                                  });
+                                            },
+                                          ),
+                                          CustomTile(
+                                            leadingIcon: Icon(Icons.camera_alt),
+                                            title: "Take a Photo",
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                              CM
+                                                  .pickImage(
+                                                    ImageSource.camera,
+                                                    picker,
+                                                  )
+                                                  .then((file) async {
+                                                    if (file != null) {
+                                                      setState(() {
+                                                        image = file;
+                                                      });
+                                                    }
+                                                  });
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
                             },
                             imagePath: image != null
                                 ? image!.path

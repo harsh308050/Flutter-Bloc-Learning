@@ -1,8 +1,14 @@
+import 'package:bloc_userprofileview/utils/Helper.dart';
 import 'package:bloc_userprofileview/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'screens/login/loginscreen.dart';
+import 'screens/auth/loginscreen.dart';
+import 'dart:developer';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SharedPrefsHelper.init();
+  var user = await SharedPrefsHelper.getData('user');
+  log(user.toString());
   runApp(const MyApp());
 }
 

@@ -1,7 +1,8 @@
 import 'package:bloc_userprofileview/screens/home/homepage.dart';
 import 'package:flutter/material.dart';
-import '../screens/login/loginscreen.dart';
-import '../screens/login/signupscreen.dart';
+import '../screens/auth/loginscreen.dart';
+import '../screens/auth/signupscreen.dart';
+import '../screens/users/UserDetailsScreen.dart';
 
 class Routes {
   static navigateToLoginScreen(BuildContext context) {
@@ -19,9 +20,16 @@ class Routes {
   }
 
   static navigateToHomePage(BuildContext context) {
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => const Homepage()),
+    );
+  }
+
+  static navigateToUserDetails(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const UserDetailsScreen()),
     );
   }
 }

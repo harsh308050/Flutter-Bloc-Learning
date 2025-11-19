@@ -25,7 +25,7 @@ class _CustomProfileState extends State<CustomProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: widget.onTap,
       child: Stack(
         children: [
