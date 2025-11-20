@@ -5,7 +5,6 @@ import 'package:bloc_userprofileview/components/CustomProfile.dart';
 import 'package:bloc_userprofileview/components/GenderButton.dart';
 import 'package:bloc_userprofileview/routes/routes.dart';
 import 'package:flutter/material.dart';
-import '../../components/CustomBottomSheet.dart';
 import '../../components/CustomTile.dart';
 import '../../utils/utils.dart';
 import '../../components/CustomButton.dart';
@@ -24,11 +23,17 @@ class _SignupScreenState extends State<SignupScreen> {
   final formKey = GlobalKey<FormState>();
   final ImagePicker picker = ImagePicker();
   File? image;
-  TextEditingController firstNameController = TextEditingController();
-  TextEditingController lastNameController = TextEditingController();
+  TextEditingController fnameController = TextEditingController();
+  TextEditingController lnameController = TextEditingController();
   TextEditingController ageController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  final FocusNode fnameFocusNode = FocusNode();
+  final FocusNode lnameFocusNode = FocusNode();
+  final FocusNode ageFocusNode = FocusNode();
+  final FocusNode emailFocusNode = FocusNode();
+  final FocusNode passwordFocusNode = FocusNode();
   bool isMale = true;
   @override
   Widget build(BuildContext context) {
@@ -49,198 +54,225 @@ class _SignupScreenState extends State<SignupScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Column(
-                        spacing: UISizes.subSpacing,
-                        children: [
-                          CustomProfile(
-                            onTap: () {
-                              showModalBottomSheet(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return ListView(
-                                    shrinkWrap: true,
-                                    padding: EdgeInsets.all(
-                                      UISizes.aroundPadding,
-                                    ),
-                                    children: [
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          CustomTile(
-                                            leadingIcon: Icon(
-                                              Icons.photo_library,
+                      Center(
+                        child: Column(
+                          spacing: UISizes.subSpacing,
+                          children: [
+                            CustomProfile(
+                              onTap: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return ListView(
+                                      shrinkWrap: true,
+                                      padding: EdgeInsets.all(
+                                        UISizes.aroundPadding,
+                                      ),
+                                      children: [
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            CustomTile(
+                                              leadingIcon: Icon(
+                                                Icons.photo_library,
+                                              ),
+                                              title: "Choose From Gallery",
+                                              onTap: () {
+                                                Navigator.pop(context);
+                                                CM
+                                                    .pickImage(
+                                                      ImageSource.gallery,
+                                                      picker,
+                                                    )
+                                                    .then((file) async {
+                                                      if (file != null) {
+                                                        setState(() {
+                                                          image = file;
+                                                        });
+                                                      }
+                                                    });
+                                              },
                                             ),
-                                            title: "Choose From Gallery",
-                                            onTap: () {
-                                              Navigator.pop(context);
-                                              CM
-                                                  .pickImage(
-                                                    ImageSource.gallery,
-                                                    picker,
-                                                  )
-                                                  .then((file) async {
-                                                    if (file != null) {
-                                                      setState(() {
-                                                        image = file;
-                                                      });
-                                                    }
-                                                  });
-                                            },
-                                          ),
-                                          CustomTile(
-                                            leadingIcon: Icon(Icons.camera_alt),
-                                            title: "Take a Photo",
-                                            onTap: () {
-                                              Navigator.pop(context);
-                                              CM
-                                                  .pickImage(
-                                                    ImageSource.camera,
-                                                    picker,
-                                                  )
-                                                  .then((file) async {
-                                                    if (file != null) {
-                                                      setState(() {
-                                                        image = file;
-                                                      });
-                                                    }
-                                                  });
-                                            },
-                                          ),
-                                        ],
+                                            CustomTile(
+                                              leadingIcon: Icon(
+                                                Icons.camera_alt,
+                                              ),
+                                              title: "Take a Photo",
+                                              onTap: () {
+                                                Navigator.pop(context);
+                                                CM
+                                                    .pickImage(
+                                                      ImageSource.camera,
+                                                      picker,
+                                                    )
+                                                    .then((file) async {
+                                                      if (file != null) {
+                                                        setState(() {
+                                                          image = file;
+                                                        });
+                                                      }
+                                                    });
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                              imagePath: image != null
+                                  ? image!.path
+                                  : AssetsPath.profile,
+                              child: Container(
+                                padding: EdgeInsets.all(4),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: UIColours.white,
+                                    width: 2,
+                                  ),
+                                  color: UIColours.primaryColor,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: image != null
+                                    ? UIIcons.editIcon
+                                    : UIIcons.addIcon,
+                              ),
+                            ),
+                            Row(
+                              spacing: UISizes.subSpacing,
+                              children: [
+                                Expanded(
+                                  child: CustomTextfield(
+                                    focusNode: fnameFocusNode,
+                                    controller: fnameController,
+                                    hintText: UIStrings.fnameHint,
+                                    labelText: UIStrings.fname,
+                                    validator: (value) {
+                                      return CM.inputvalidator(
+                                        value,
+                                        "First Name",
+                                      );
+                                    },
+                                  ),
+                                ),
+                                Expanded(
+                                  child: CustomTextfield(
+                                    focusNode: lnameFocusNode,
+                                    controller: lnameController,
+                                    hintText: UIStrings.lnameHint,
+                                    labelText: UIStrings.lname,
+                                    validator: (value) {
+                                      return CM.inputvalidator(
+                                        value,
+                                        "Last Name",
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                            CustomTextfield(
+                              focusNode: ageFocusNode,
+                              controller: ageController,
+                              hintText: UIStrings.ageHint,
+                              labelText: UIStrings.age,
+                              keyboardType: TextInputType.number,
+                              validator: (value) {
+                                return CM.inputvalidator(value, "Age");
+                              },
+                            ),
+                            Column(
+                              spacing: UISizes.minSpacing,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  UIStrings.gender,
+                                  style: TextStyle(fontWeight: FontWeight.w600),
+                                ),
+
+                                Container(
+                                  height: 60,
+                                  decoration: BoxDecoration(
+                                    color: UIColours.grey.withOpacity(0.1),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Row(
+                                    spacing: 5,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Genderbutton(
+                                        onGenderChanged: () {
+                                          setState(() {
+                                            isMale = true;
+                                          });
+                                        },
+                                        label: "Male",
+                                        isMale: isMale,
+                                      ),
+                                      Genderbutton(
+                                        onGenderChanged: () {
+                                          setState(() {
+                                            isMale = false;
+                                          });
+                                        },
+                                        label: "Female",
+                                        isMale: !isMale,
                                       ),
                                     ],
-                                  );
-                                },
-                              );
-                            },
-                            imagePath: image != null
-                                ? image!.path
-                                : AssetsPath.profile,
-                            child: Container(
-                              padding: EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: UIColours.white,
-                                  width: 2,
+                                  ),
                                 ),
-                                color: UIColours.primaryColor,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: image != null
-                                  ? UIIcons.editIcon
-                                  : UIIcons.addIcon,
+                              ],
                             ),
-                          ),
-                          Row(
-                            spacing: UISizes.subSpacing,
-                            children: [
-                              Expanded(
-                                child: CustomTextfield(
-                                  controller: firstNameController,
-                                  hintText: UIStrings.fnameHint,
-                                  labelText: UIStrings.fname,
-                                  validator: (value) {
-                                    return CM.inputvalidator(
-                                      value,
-                                      "First Name",
-                                    );
-                                  },
-                                ),
-                              ),
-                              Expanded(
-                                child: CustomTextfield(
-                                  controller: lastNameController,
-                                  hintText: UIStrings.lnameHint,
-                                  labelText: UIStrings.lname,
-                                  validator: (value) {
-                                    return CM.inputvalidator(
-                                      value,
-                                      "Last Name",
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                          CustomTextfield(
-                            controller: ageController,
-                            hintText: UIStrings.ageHint,
-                            labelText: UIStrings.age,
-                            keyboardType: TextInputType.number,
-                            validator: (value) {
-                              return CM.inputvalidator(value, "Age");
-                            },
-                          ),
-                          Column(
-                            spacing: UISizes.minSpacing,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                UIStrings.gender,
-                                style: TextStyle(fontWeight: FontWeight.w600),
-                              ),
-
-                              Container(
-                                height: 60,
-                                decoration: BoxDecoration(
-                                  color: UIColours.grey.withOpacity(0.1),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Row(
-                                  spacing: 5,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Genderbutton(
-                                      onGenderChanged: () {
-                                        setState(() {
-                                          isMale = true;
-                                        });
-                                      },
-                                      label: "Male",
-                                      isMale: isMale,
-                                    ),
-                                    Genderbutton(
-                                      onGenderChanged: () {
-                                        setState(() {
-                                          isMale = false;
-                                        });
-                                      },
-                                      label: "Female",
-                                      isMale: !isMale,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          CustomTextfield(
-                            controller: emailController,
-                            hintText: UIStrings.emailHint,
-                            labelText: UIStrings.emailLabel,
-                            validator: (value) {
-                              return CM.inputvalidator(value, "Email");
-                            },
-                          ),
-                          CustomTextfield(
-                            controller: passwordController,
-                            hintText: UIStrings.passwordHint,
-                            labelText: UIStrings.passwordLabel,
-                            validator: (value) {
-                              return CM.inputvalidator(value, "Password");
-                            },
-                          ),
-                        ],
+                            CustomTextfield(
+                              focusNode: emailFocusNode,
+                              controller: emailController,
+                              hintText: UIStrings.emailHint,
+                              labelText: UIStrings.emailLabel,
+                              validator: (value) {
+                                return CM.inputvalidator(value, "Email");
+                              },
+                            ),
+                            CustomTextfield(
+                              focusNode: passwordFocusNode,
+                              controller: passwordController,
+                              hintText: UIStrings.passwordHint,
+                              labelText: UIStrings.passwordLabel,
+                              validator: (value) {
+                                return CM.inputvalidator(value, "Password");
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                       CM.SbhMain(),
                       CM.SbhMain(),
                       CustomButton(
                         buttonText: UIStrings.signupButton,
                         onButtonPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            Routes.navigateToHomePage(context);
+                          if (fnameController.text.isEmpty) {
+                            focusNodeRoute(fnameFocusNode, context);
+                            return;
                           }
+                          if (lnameController.text.isEmpty) {
+                            focusNodeRoute(lnameFocusNode, context);
+                            return;
+                          }
+                          if (ageController.text.isEmpty) {
+                            focusNodeRoute(ageFocusNode, context);
+                            return;
+                          }
+                          if (emailController.text.isEmpty) {
+                            focusNodeRoute(emailFocusNode, context);
+                            return;
+                          }
+                          if (passwordController.text.isEmpty) {
+                            focusNodeRoute(passwordFocusNode, context);
+                            return;
+                          }
+                          if (formKey.currentState!.validate()) {}
                         },
                       ),
                       CM.SbhMin(),

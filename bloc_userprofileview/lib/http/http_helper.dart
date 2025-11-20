@@ -2,12 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
 import '../utils/APIConstant.dart';
-
-import 'dart:convert';
-import 'dart:developer';
-
-import 'package:http/http.dart' as http;
-import '../utils/APIConstant.dart';
+import '../utils/SharedPrefHelper.dart';
 
 Future<dynamic> postMethod({
   required String endpoint,
@@ -33,29 +28,36 @@ Future<dynamic> postMethod({
   }
 }
 
-Future<dynamic> get() async {}
-
 Map<String, String> getSessionData() {
-  return {"Content-Type": "application/json", "Accept": "application/json"};
+  return {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "",
+  };
 }
 
-Future<dynamic> getMethod(String endpoints) async {
+Future<dynamic> getMethod({
+  required String endpoint,
+  Map<String, String>? headers,
+}) async {
   try {
-    final uri = Uri.parse(APIConstant.baseUrl + endpoints);
+    final url = Uri.parse(APIConstant.baseUrl + endpoint);
 
-    log("----------URL------------   ${uri.toString()}");
+    final requestHeaders = {
+      ...getSessionData(),
+      ...?headers,
+      "Authorization": "Bearer ${sharedPrefGetToken()}",
+    };
 
-    final response = await http.get(uri, headers: getSessionData());
+    log("--------- URL (GET) ---------- $url");
+    log("--------- Headers ---------- $requestHeaders");
 
-    log("----------RESPONSE------------   ${response.body}");
+    final response = await http.get(url, headers: requestHeaders);
 
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body);
-    } else {
-      print('Error with Api and the status code is ${response.statusCode}');
-    }
+    log("----------- GET Response ----------- ${response.body}");
+    return response;
   } catch (e) {
-    print('GET Error: $e');
+    log("GET ERROR $e");
   }
 }
 

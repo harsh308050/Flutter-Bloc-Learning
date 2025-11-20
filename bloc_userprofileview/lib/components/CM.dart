@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CM {
-  static void showSnackBar(BuildContext context, String message, Color color) {
+  static showSnackBar(BuildContext context, String message, Color color) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
@@ -54,10 +54,6 @@ class CM {
     }
   }
 
-  // static void _showImagePickerOptions(BuildContext context) {
-
-  // }
-
   static Widget SbhMain() {
     return SizedBox(height: UISizes.mainSpacing);
   }
@@ -69,4 +65,8 @@ class CM {
   static Widget SbhMin() {
     return SizedBox(height: UISizes.minSpacing);
   }
+}
+
+void focusNodeRoute(FocusNode focusNode, BuildContext context) {
+  FocusScope.of(context).requestFocus(focusNode);
 }

@@ -17,4 +17,10 @@ class DataSource {
     log('Login response: $response');
     return response;
   }
+
+  Future<dynamic> getUserDetails() async {
+    final response = await getMethod(endpoint: APIConstant.user);
+    log('Login response: $response');
+    return response;
+  }
 }

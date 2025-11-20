@@ -1,8 +1,9 @@
+import 'dart:convert';
 import 'dart:developer';
 
-import 'package:bloc_userprofileview/bloc/bloc/event.dart';
+import 'package:bloc_userprofileview/bloc/bloc/loginBloc/event.dart';
 import 'package:bloc_userprofileview/bloc/data/datasource.dart';
-import 'package:bloc_userprofileview/bloc/model/model.dart';
+import 'package:bloc_userprofileview/bloc/model/user_model.dart';
 import 'package:bloc_userprofileview/components/CM.dart';
 import 'package:bloc_userprofileview/components/CustomButton.dart';
 import 'package:bloc_userprofileview/components/CustomTextButton.dart';
@@ -10,9 +11,10 @@ import 'package:bloc_userprofileview/components/CustomTextField.dart';
 import 'package:bloc_userprofileview/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../utils/SharedPrefHelper.dart';
 import '../../utils/utils.dart';
-import '../../bloc/bloc/bloc.dart';
-import '../../bloc/bloc/state.dart';
+import '../../bloc/bloc/loginBloc/bloc.dart';
+import '../../bloc/bloc/loginBloc/state.dart';
 import '../../bloc/data/repository.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -28,6 +30,9 @@ class _LoginScreenState extends State<LoginScreen> {
   final formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  final FocusNode emailFocusNode = FocusNode();
+  final FocusNode passwordFocusNode = FocusNode();
   bool obsecureText = true;
   @override
   Widget build(BuildContext context) {
@@ -35,11 +40,18 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: UIColours.white,
       body: BlocListener<UserBloc, AppState>(
         bloc: userBloc,
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state.status == Status.success) {
-            // model = state.user;
-            log('Login Successful: ${state.user}');
-            Routes.navigateToHomePage(context);
+            await sharedPrefsaveData(
+              sharedPrefKeys.userDataKey,
+              jsonEncode(state.user?.toJson()),
+            );
+            var token = await sharedPrefsaveData(
+              sharedPrefKeys.accessTokenKey,
+              state.user?.accessToken,
+            );
+            log('Token saved: $token');
+            Routes.navigateToHomePage(context, user: state.user);
           } else if (state.status == Status.failed) {
             CM.showSnackBar(
               context,
@@ -51,109 +63,116 @@ class _LoginScreenState extends State<LoginScreen> {
         child: BlocBuilder<UserBloc, AppState>(
           bloc: userBloc,
           builder: (context, state) => SafeArea(
-            child: state.status == Status.busy
-                ? Center(
-                    child: CircularProgressIndicator(
-                      color: UIColours.primaryColor,
-                    ),
-                  )
-                : Padding(
-                    padding: EdgeInsets.only(
-                      top: UISizes.aroundPadding * 5,
-                      left: UISizes.aroundPadding,
-                      right: UISizes.aroundPadding,
-                    ),
-                    child: SingleChildScrollView(
-                      child: Form(
-                        key: formKey,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              UIStrings.loginTitle,
-                              style: TextStyle(
-                                fontSize: UISizes.titleFontSize,
-                                color: UIColours.black,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            CM.SbhMain(),
-                            CustomTextfield(
-                              controller: emailController,
-                              hintText: UIStrings.emailHint,
-                              labelText: UIStrings.emailLabel,
-                              prefixIcon: UIIcons.emailIcon,
-                              // validator: (value) {
-                              //   return CM.inputvalidator(value, "Email");
-                              // },
-                            ),
-                            CM.SbhSub(),
-                            CustomTextfield(
-                              controller: passwordController,
-                              hintText: UIStrings.passwordHint,
-                              labelText: UIStrings.passwordLabel,
-                              prefixIcon: UIIcons.passwordIcon,
-                              onSuffixPressed: () {
-                                setState(() {
-                                  obsecureText = !obsecureText;
-                                });
-                              },
-                              obscureText: obsecureText,
-                              suffixIcon: obsecureText == true
-                                  ? UIIcons.passwordEyeIcon.icon
-                                  : UIIcons.passwordEyeDisabledIcon.icon,
-                              validator: (value) {
-                                return CM.inputvalidator(value, "Password");
-                              },
-                            ),
-                            CM.SbhSub(),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                CustomTextButton(
-                                  buttonText: UIStrings.forgotPassword,
-                                ),
-                              ],
-                            ),
-
-                            CM.SbhMin(),
-                            CustomButton(
-                              buttonText: UIStrings.loginButton,
-                              onButtonPressed: () {
-                                if (formKey.currentState!.validate()) {
-                                  userBloc.add(
-                                    UserEvent(
-                                      username: emailController.text,
-                                      password: passwordController.text,
-                                    ),
-                                  );
-                                }
-                              },
-                            ),
-                            CM.SbhSub(),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  UIStrings.newOnApp,
-                                  style: TextStyle(
-                                    color: UIColours.greyShade,
-                                    fontSize: UISizes.inputFontSize,
-                                  ),
-                                ),
-                                CustomTextButton(
-                                  buttonText: UIStrings.signupButton,
-                                  onTextButtonPressed: () {
-                                    Routes.navigateToSignupScreen(context);
-                                  },
-                                ),
-                              ],
-                            ),
-                          ],
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: UISizes.aroundPadding * 5,
+                left: UISizes.aroundPadding,
+                right: UISizes.aroundPadding,
+              ),
+              child: SingleChildScrollView(
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        UIStrings.loginTitle,
+                        style: TextStyle(
+                          fontSize: UISizes.titleFontSize,
+                          color: UIColours.black,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
-                    ),
+                      CM.SbhMain(),
+                      CustomTextfield(
+                        focusNode: emailFocusNode,
+                        controller: emailController,
+                        hintText: UIStrings.emailHint,
+                        labelText: UIStrings.emailLabel,
+                        prefixIcon: UIIcons.emailIcon,
+                        validator: (value) {
+                          return CM.inputvalidator(value, "Email");
+                        },
+                      ),
+                      CM.SbhSub(),
+                      CustomTextfield(
+                        focusNode: passwordFocusNode,
+                        controller: passwordController,
+                        hintText: UIStrings.passwordHint,
+                        labelText: UIStrings.passwordLabel,
+                        prefixIcon: UIIcons.passwordIcon,
+                        onSuffixPressed: () {
+                          setState(() {
+                            obsecureText = !obsecureText;
+                          });
+                        },
+                        obscureText: obsecureText,
+                        suffixIcon: obsecureText == true
+                            ? UIIcons.passwordEyeIcon.icon
+                            : UIIcons.passwordEyeDisabledIcon.icon,
+                        validator: (value) {
+                          return CM.inputvalidator(value, "Password");
+                        },
+                      ),
+                      CM.SbhSub(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          CustomTextButton(
+                            buttonText: UIStrings.forgotPassword,
+                          ),
+                        ],
+                      ),
+
+                      CM.SbhMin(),
+                      CustomButton(
+                        isLoading: state.status == Status.busy ? true : false,
+                        buttonText: UIStrings.loginButton,
+                        onButtonPressed: () {
+                          FocusScope.of(context).unfocus();
+                          if (emailController.text.isEmpty) {
+                            focusNodeRoute(emailFocusNode, context);
+                            return;
+                          }
+                          if (passwordController.text.isEmpty) {
+                            focusNodeRoute(passwordFocusNode, context);
+                            return;
+                          }
+                          if (formKey.currentState!.validate()) {
+                            userBloc.add(
+                              UserEvent(
+                                username: emailController.text,
+                                password: passwordController.text,
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                      CM.SbhSub(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            UIStrings.newOnApp,
+                            style: TextStyle(
+                              color: UIColours.greyShade,
+                              fontSize: UISizes.inputFontSize,
+                            ),
+                          ),
+                          CustomTextButton(
+                            buttonText: UIStrings.signupButton,
+                            onTextButtonPressed: () {
+                              FocusScope.of(context).unfocus();
+                              Routes.navigateToSignupScreen(context);
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
+                ),
+              ),
+            ),
           ),
         ),
       ),

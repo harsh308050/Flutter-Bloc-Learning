@@ -20,10 +20,12 @@ class UIStrings {
   static String lname = "Last Name";
   static String age = "Age";
   static String gender = "Gender";
+  static String username = "Username";
   static String searchbarHint = "Search by name or email...";
 
   static String loginButton = "Login";
   static String signupButton = "Create Account";
+  static String editBtn = "Edit";
   static String editprofileButton = "Save Changes";
   static String forgotPassword = "Forgot Password?";
 
@@ -65,7 +67,7 @@ class UISizes {
   static double verticalInputPadding = 15.0;
   static double horizontalInputPadding = 18.0;
   static double appbarHeight = 56.0;
-  static double tileTitle = 18.0;
+  static double tileTitle = 17.0;
   static double tileSubtitle = 14.0;
   static double trailIconSize = 16.0;
   static double btnHeight = 45.0;
@@ -83,9 +85,9 @@ class UIIcons {
     Icons.visibility_outlined,
     color: UIColours.grey,
   );
-  static Icon passwordEyeDisabledIcon = const Icon(
+  static Icon passwordEyeDisabledIcon = Icon(
     Icons.visibility_off_outlined,
-    color: Colors.grey,
+    color: UIColours.grey,
   );
   static Icon settingsIcon = const Icon(Icons.settings_outlined);
   static Icon arrowBtnIcon = Icon(
@@ -125,4 +127,9 @@ class UIIcons {
 
 class AssetsPath {
   static String profile = "assets/images/profile.png";
+}
+
+class sharedPrefKeys {
+  static String userDataKey = "user";
+  static String accessTokenKey = "accessToken";
 }

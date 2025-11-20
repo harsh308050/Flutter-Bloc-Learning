@@ -4,7 +4,7 @@ import 'package:bloc_userprofileview/screens/users/UserScreen.dart';
 import 'package:flutter/material.dart';
 
 class Homepage extends StatefulWidget {
-  const Homepage({super.key});
+  Homepage({super.key});
 
   @override
   State<Homepage> createState() => _HomepageState();
@@ -12,7 +12,13 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   int _currentIndex = 0;
-  List<Widget> screen = [UserScreen(), SettingsScreen()];
+  late List<Widget> screen;
+  @override
+  void initState() {
+    super.initState();
+    screen = [UserScreen(), SettingsScreen()];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

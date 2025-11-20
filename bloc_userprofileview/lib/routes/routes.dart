@@ -2,11 +2,16 @@ import 'package:bloc_userprofileview/screens/home/homepage.dart';
 import 'package:flutter/material.dart';
 import '../screens/auth/loginscreen.dart';
 import '../screens/auth/signupscreen.dart';
+import '../screens/users/EditUserDetailsScreen.dart';
 import '../screens/users/UserDetailsScreen.dart';
 
 class Routes {
+  static popScreen(BuildContext context) {
+    Navigator.pop(context);
+  }
+
   static navigateToLoginScreen(BuildContext context) {
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => const LoginScreen()),
     );
@@ -19,17 +24,27 @@ class Routes {
     );
   }
 
-  static navigateToHomePage(BuildContext context) {
+  static navigateToHomePage(BuildContext context, {required user}) {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => const Homepage()),
+      MaterialPageRoute(builder: (context) => Homepage()),
     );
   }
 
   static navigateToUserDetails(BuildContext context) {
-    Navigator.pushReplacement(
+    Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const UserDetailsScreen()),
+      MaterialPageRoute(builder: (context) => UserDetailsScreen()),
+    );
+  }
+
+  static navigateToEditUserDetailsScreen(
+    BuildContext context, {
+    required user,
+  }) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => EditUserDetailsScreen()),
     );
   }
 }

@@ -6,6 +6,7 @@ class CustomTextfield extends StatelessWidget {
   final String labelText;
   final TextEditingController? controller;
   final Widget? prefixIcon;
+  final FocusNode? focusNode;
   final TextInputType? keyboardType;
   final VoidCallback? onSuffixPressed;
   final IconData? suffixIcon;
@@ -13,6 +14,7 @@ class CustomTextfield extends StatelessWidget {
   final String? Function(String?)? validator;
   const CustomTextfield({
     super.key,
+    required this.focusNode,
     required this.hintText,
     required this.labelText,
     required this.controller,
@@ -39,6 +41,7 @@ class CustomTextfield extends StatelessWidget {
         ),
         SizedBox(height: UISizes.minSpacing),
         TextFormField(
+          focusNode: focusNode,
           controller: controller,
           keyboardType: keyboardType,
           cursorColor: UIColours.primaryColor,

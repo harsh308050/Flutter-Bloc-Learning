@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'package:bloc_userprofileview/bloc/model/model.dart';
+import 'package:bloc_userprofileview/bloc/model/user_model.dart';
+import 'package:bloc_userprofileview/bloc/model/user_res_model.dart';
 import 'package:http/http.dart';
 
 import '../../http/apires.dart';
@@ -20,6 +21,20 @@ class Repository {
       );
       if (result.statusCode == 200 || result.statusCode == 201) {
         final data = UserModel.fromJson(jsonDecode(result.body));
+        return ApiResult.success(data: data);
+      } else {
+        return ApiResult.failure(error: jsonDecode(result.body)['message']);
+      }
+    } catch (e) {
+      return ApiResult.failure(error: "Something went wrong");
+    }
+  }
+
+  Future<ApiResult<UserResModel>> getUserDetails() async {
+    try {
+      Response result = await dataSource.getUserDetails();
+      if (result.statusCode == 200 || result.statusCode == 201) {
+        final data = UserResModel.fromJson(jsonDecode(result.body));
         return ApiResult.success(data: data);
       } else {
         return ApiResult.failure(error: jsonDecode(result.body)['message']);

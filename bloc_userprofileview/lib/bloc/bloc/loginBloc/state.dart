@@ -1,4 +1,4 @@
-import '../model/model.dart';
+import '../../model/user_model.dart';
 
 enum Status { none, success, busy, failed }
 

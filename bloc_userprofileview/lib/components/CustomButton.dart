@@ -2,32 +2,42 @@ import 'package:bloc_userprofileview/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
-  final VoidCallback? onButtonPressed;
+  final VoidCallback onButtonPressed;
   final String buttonText;
+  final bool isLoading;
   const CustomButton({
     super.key,
-    this.onButtonPressed,
+    required this.onButtonPressed,
     required this.buttonText,
+    this.isLoading = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onButtonPressed,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: UIColours.primaryColor,
-        minimumSize: Size(double.infinity, UISizes.btnHeight),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(UISizes.inputRadius),
+    return IgnorePointer(
+      ignoring: isLoading,
+      child: ElevatedButton(
+        onPressed: onButtonPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: UIColours.primaryColor,
+          minimumSize: Size(double.infinity, UISizes.btnHeight),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(UISizes.inputRadius),
+          ),
         ),
-      ),
-      child: Text(
-        buttonText,
-        style: TextStyle(
-          fontSize: UISizes.btnFontSize,
-          fontWeight: FontWeight.bold,
-          color: UIColours.white,
-        ),
+        child: isLoading
+            ? Transform.scale(
+                scale: 0.7,
+                child: CircularProgressIndicator(color: UIColours.white),
+              )
+            : Text(
+                buttonText,
+                style: TextStyle(
+                  fontSize: UISizes.btnFontSize,
+                  fontWeight: FontWeight.bold,
+                  color: UIColours.white,
+                ),
+              ),
       ),
     );
   }

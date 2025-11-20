@@ -20,7 +20,12 @@ class CustomProfile extends StatefulWidget {
 
 class _CustomProfileState extends State<CustomProfile> {
   bool isFile() {
-    return File(widget.imagePath).existsSync();
+    if (widget.imagePath.isEmpty) return false;
+    try {
+      return File(widget.imagePath).existsSync();
+    } catch (e) {
+      return false;
+    }
   }
 
   @override

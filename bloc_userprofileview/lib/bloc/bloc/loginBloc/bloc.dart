@@ -1,9 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../data/repository.dart';
+import '../../data/repository.dart';
 import 'event.dart';
 import 'state.dart';
 
-class UserBloc extends Bloc<UserEvent, AppState> {
+class UserBloc extends Bloc<BlocEvent, AppState> {
   final Repository repository;
   UserBloc({required this.repository}) : super(InitialState()) {
     on<UserEvent>(onLoginUser);
