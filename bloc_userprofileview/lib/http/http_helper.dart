@@ -22,6 +22,7 @@ Future<dynamic> postMethod({
       body: jsonEncode(body),
     );
 
+    log("---------- Response ----------${response.body}");
     return response;
   } catch (e) {
     log("POST ERROR $e");
@@ -89,30 +90,25 @@ Future<dynamic> deleteMethod(
   }
 }
 
-Future<dynamic> patchMethod(
-  String endpoints, {
-  Map<String, dynamic>? queryParams,
+Future<dynamic> patchMethod({
+  required String endpoint,
+  Object? body,
+  Map<String, String>? headers,
 }) async {
   try {
-    final uri = Uri.parse(APIConstant.baseUrl + endpoints);
+    final url = Uri.parse(APIConstant.baseUrl + endpoint);
 
-    log("----------URL------------   ${uri.toString()}");
-    log("----------REQUEST------------   $queryParams");
-
+    log("--------- URL (PATCH) ---------- $url");
+    log("--------- Request ---------- ${jsonEncode(body)}");
     final response = await http.patch(
-      uri,
-      body: jsonEncode(queryParams),
+      url,
       headers: getSessionData(),
+      body: jsonEncode(body),
     );
 
-    log("----------RESPONSE------------   ${response.body}");
-
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body);
-    } else {
-      print('Error with Api and the status code is ${response.statusCode}');
-    }
+    log("--------- PATCH Response ---------- ${response.body}");
+    return response;
   } catch (e) {
-    print('PATCH Error: $e');
+    log("PATCH ERROR $e");
   }
 }

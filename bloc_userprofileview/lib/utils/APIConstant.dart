@@ -3,5 +3,5 @@ class APIConstant {
   static const String login = "auth/login";
   static const String user = "auth/me";
   static const String signup = "users/add";
-  // static const String users = "users";
+  static const String allusers = "users";
 }

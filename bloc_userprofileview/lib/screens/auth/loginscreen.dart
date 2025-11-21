@@ -16,6 +16,7 @@ import '../../utils/utils.dart';
 import '../../bloc/bloc/loginBloc/bloc.dart';
 import '../../bloc/bloc/loginBloc/state.dart';
 import '../../bloc/data/repository.dart';
+import 'package:flutter/foundation.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -28,8 +29,12 @@ class _LoginScreenState extends State<LoginScreen> {
   final UserBloc userBloc = UserBloc(repository: Repository(DataSource()));
   UserModel? model;
   final formKey = GlobalKey<FormState>();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController emailController = TextEditingController(
+    text: kDebugMode ? "emilys" : "",
+  );
+  TextEditingController passwordController = TextEditingController(
+    text: kDebugMode ? "emilyspass" : "",
+  );
 
   final FocusNode emailFocusNode = FocusNode();
   final FocusNode passwordFocusNode = FocusNode();

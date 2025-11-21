@@ -44,7 +44,9 @@ class Routes {
   }) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => EditUserDetailsScreen()),
+      MaterialPageRoute(
+        builder: (context) => EditUserDetailsScreen(userid: user.id.toString()),
+      ),
     );
   }
 }

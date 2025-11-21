@@ -16,6 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     var userToken = sharedPrefGetToken();
+    user = sharedPrefGetUser();
     Future.delayed(Duration(seconds: 3), () {
       userToken != null
           ? Routes.navigateToHomePage(context, user: user)
@@ -30,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
         color: UIColours.primaryColor,
         child: Center(
           child: Text(
-            'UserApp',
+            'UserMe',
             style: TextStyle(
               fontSize: UISizes.titleFontSize,
               fontWeight: FontWeight.bold,

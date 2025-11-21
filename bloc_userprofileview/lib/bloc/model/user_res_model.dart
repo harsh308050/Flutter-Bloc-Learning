@@ -60,11 +60,11 @@ class UserResModel {
   });
 
   UserResModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    id = _toInt(json['id']);
     firstName = json['firstName'];
     lastName = json['lastName'];
     maidenName = json['maidenName'];
-    age = json['age'];
+    age = _toInt(json['age']);
     gender = json['gender'];
     email = json['email'];
     phone = json['phone'];
@@ -73,26 +73,33 @@ class UserResModel {
     birthDate = json['birthDate'];
     image = json['image'];
     bloodGroup = json['bloodGroup'];
-    height = json['height'];
-    weight = json['weight'];
+    height = _toDouble(json['height']);
+    weight = _toDouble(json['weight']);
     eyeColor = json['eyeColor'];
-    hair = json['hair'] != null ? new Hair.fromJson(json['hair']) : null;
+
+    hair = json['hair'] != null ? Hair.fromJson(json['hair']) : null;
+
     ip = json['ip'];
+
     address = json['address'] != null
-        ? new Address.fromJson(json['address'])
+        ? Address.fromJson(json['address'])
         : null;
+
     macAddress = json['macAddress'];
     university = json['university'];
-    bank = json['bank'] != null ? new Bank.fromJson(json['bank']) : null;
+
+    bank = json['bank'] != null ? Bank.fromJson(json['bank']) : null;
+
     company = json['company'] != null
-        ? new Company.fromJson(json['company'])
+        ? Company.fromJson(json['company'])
         : null;
+
     ein = json['ein'];
     ssn = json['ssn'];
     userAgent = json['userAgent'];
-    crypto = json['crypto'] != null
-        ? new Crypto.fromJson(json['crypto'])
-        : null;
+
+    crypto = json['crypto'] != null ? Crypto.fromJson(json['crypto']) : null;
+
     role = json['role'];
   }
 
@@ -307,4 +314,19 @@ class Crypto {
     data['network'] = this.network;
     return data;
   }
+}
+
+int? _toInt(dynamic value) {
+  if (value == null) return null;
+  if (value is int) return value;
+  if (value is String) return int.tryParse(value);
+  return null;
+}
+
+double? _toDouble(dynamic value) {
+  if (value == null) return null;
+  if (value is double) return value;
+  if (value is int) return value.toDouble();
+  if (value is String) return double.tryParse(value);
+  return null;
 }

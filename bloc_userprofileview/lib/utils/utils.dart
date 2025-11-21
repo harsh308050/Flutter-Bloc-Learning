@@ -50,6 +50,7 @@ class UIColours {
   static Color white = Colors.white;
   static Color greyShade = Colors.grey.shade600;
   static Color errorColor = Colors.red;
+  static Color successColor = Colors.green;
 }
 
 class UISizes {

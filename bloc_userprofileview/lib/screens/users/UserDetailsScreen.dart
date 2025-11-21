@@ -1,7 +1,7 @@
-import 'package:bloc_userprofileview/bloc/model/user_model.dart';
 import 'package:bloc_userprofileview/components/CM.dart';
 import 'package:bloc_userprofileview/components/CustomTextButton.dart';
 import 'package:bloc_userprofileview/utils/utils.dart';
+import 'package:bloc_userprofileview/bloc/model/user_res_model.dart';
 import 'package:flutter/material.dart';
 import '../../utils/SharedPrefHelper.dart';
 import '../../components/CustomAppBar.dart';
@@ -15,7 +15,7 @@ class UserDetailsScreen extends StatefulWidget {
 }
 
 class _UserDetailsScreenState extends State<UserDetailsScreen> {
-  UserModel? user = sharedPrefGetUser();
+  UserResModel? user = sharedPrefGetUser();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,25 +42,33 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
               Center(
                 child: Column(
                   children: [
-                    CircleAvatar(
-                      radius: 60,
-                      backgroundColor: UIColours.white,
-                      backgroundImage: (user?.image != null && user!.image!.isNotEmpty)
-                          ? NetworkImage(user!.image!)
-                          : null,
-                      child: (user?.image == null || user!.image!.isEmpty)
-                          ? Icon(
-                              Icons.person,
-                              size: 60,
-                              color: UIColours.grey,
-                            )
-                          : null,
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: UIColours.grey,
+                        border: Border.all(color: UIColours.grey, width: 2),
+                      ),
+                      child: CircleAvatar(
+                        radius: 60,
+                        backgroundColor: UIColours.white,
+                        backgroundImage:
+                            (user?.image != null && user!.image!.isNotEmpty)
+                            ? NetworkImage(user!.image!)
+                            : null,
+                        child: (user?.image == null || user!.image!.isEmpty)
+                            ? Icon(
+                                Icons.person,
+                                size: 60,
+                                color: UIColours.grey,
+                              )
+                            : null,
+                      ),
                     ),
                     SizedBox(height: UISizes.mainSpacing * 2),
                     Text(
                       '${user?.firstName} ${user?.lastName}',
                       style: TextStyle(
-                        fontSize: UISizes.tileTitle,
+                        fontSize: UISizes.tileTitle + 5,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

@@ -1,9 +1,8 @@
 import 'dart:convert';
 
+import 'package:bloc_userprofileview/bloc/model/user_res_model.dart';
 import 'package:bloc_userprofileview/utils/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../bloc/model/user_model.dart';
 import '../main.dart';
 
 SharedPreferences? prefs;
@@ -40,13 +39,14 @@ Future<bool> sharedPrefRemoveData(String key) async {
 
 Future<bool> sharedPrefClearAllData() async {
   if (prefs == null) await sharedPrefInit();
+  user = null;
   return prefs!.clear();
 }
 
 sharedPrefGetUser() {
   final rawUser = sharedPrefGetData(sharedPrefKeys.userDataKey);
   if (rawUser != null && rawUser is String) {
-    return UserModel.fromJson(jsonDecode(rawUser));
+    return UserResModel.fromJson(jsonDecode(rawUser));
   }
   return user;
 }
