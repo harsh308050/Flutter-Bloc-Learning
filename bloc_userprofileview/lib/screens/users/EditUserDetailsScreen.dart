@@ -6,7 +6,6 @@ import 'package:bloc_userprofileview/bloc/bloc/userDetailsBloc/state.dart';
 import 'package:bloc_userprofileview/bloc/data/datasource.dart';
 import 'package:bloc_userprofileview/bloc/data/repository.dart';
 import 'package:bloc_userprofileview/components/CustomAppBar.dart';
-// import 'package:bloc_userprofileview/main.dart';
 import 'package:bloc_userprofileview/routes/routes.dart';
 import 'package:bloc_userprofileview/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +17,7 @@ import '../../components/CustomTextField.dart';
 import '../../utils/SharedPrefHelper.dart';
 
 class EditUserDetailsScreen extends StatefulWidget {
-  String userid = sharedPrefGetUser()?.id.toString() ?? '0';
+  String userid = sharedPrefGetUser()?.id.toString() ?? '1';
   EditUserDetailsScreen({super.key, required this.userid});
 
   @override

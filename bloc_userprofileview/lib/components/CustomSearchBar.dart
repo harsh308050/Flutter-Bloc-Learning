@@ -11,6 +11,8 @@ class CustomSearchBar extends StatelessWidget {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
+        fillColor: UIColours.white,
+        filled: true,
         hintText: hintText,
         prefixIcon: Icon(Icons.search, color: UIColours.grey),
         border: OutlineInputBorder(

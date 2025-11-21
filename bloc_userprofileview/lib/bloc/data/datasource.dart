@@ -19,7 +19,7 @@ class DataSource {
   }
 
   Future<dynamic> getUserDetails() async {
-    final response = await getMethod(endpoint: APIConstant.allusers);
+    final response = await getMethod(endpoint: APIConstant.user);
     log('Login response: $response');
     return response;
   }
@@ -33,6 +33,18 @@ class DataSource {
       body: params,
     );
     log('Edit Profile response: $response');
+    return response;
+  }
+
+  Future<dynamic> getAllUsers() async {
+    final response = await getMethod(endpoint: APIConstant.allusers);
+    log('Login response: $response');
+    return response;
+  }
+
+  Future<dynamic> getAllUsersDetailsData(num id) async {
+    final response = await getMethod(endpoint: "${APIConstant.allusers}/$id");
+    log('Login response: $response');
     return response;
   }
 }

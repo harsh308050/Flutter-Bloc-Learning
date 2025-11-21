@@ -1,6 +1,6 @@
 import 'package:bloc_userprofileview/components/CustomBottomAppBar.dart';
 import 'package:bloc_userprofileview/screens/settings/SettingsScreen.dart';
-import 'package:bloc_userprofileview/screens/users/UserScreen.dart';
+import 'package:bloc_userprofileview/screens/users/AllUserScreen.dart';
 import 'package:flutter/material.dart';
 
 class Homepage extends StatefulWidget {

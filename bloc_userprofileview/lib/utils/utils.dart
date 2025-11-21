@@ -21,6 +21,9 @@ class UIStrings {
   static String age = "Age";
   static String gender = "Gender";
   static String username = "Username";
+  static String birthDate = "Birth Date";
+  static String phoneLabel = "Phone Number";
+  static String country = "Country";
   static String searchbarHint = "Search by name or email...";
 
   static String loginButton = "Login";

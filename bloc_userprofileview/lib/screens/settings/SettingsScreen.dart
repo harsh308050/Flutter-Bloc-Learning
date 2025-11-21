@@ -41,31 +41,31 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(UISizes.appbarHeight),
-        child: CustomAppBar(
-          isCenter: false,
-          appbarTitle: UIStrings.appbarSettings,
+    return BlocListener<UserDetailsBloc, UserDetailsAppState>(
+      bloc: userBloc,
+      listener: (context, state) {
+        if (state.status == UserDetailsStatus.success) {
+          sharedPrefsaveData(sharedPrefKeys.userDataKey, state.userdetails);
+          user = state.userdetails;
+          log("User details loaded from API");
+        } else if (state.status == UserDetailsStatus.failed) {
+          CM.showSnackBar(
+            context,
+            "Failed to load user details",
+            UIColours.errorColor,
+          );
+        }
+      },
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(UISizes.appbarHeight),
+          child: CustomAppBar(
+            isCenter: false,
+            appbarTitle: UIStrings.appbarSettings,
+          ),
         ),
-      ),
-      backgroundColor: UIColours.white,
-      body: BlocListener<UserDetailsBloc, UserDetailsAppState>(
-        bloc: userBloc,
-        listener: (context, state) {
-          if (state.status == UserDetailsStatus.success) {
-            sharedPrefsaveData(sharedPrefKeys.userDataKey, state.userdetails);
-            user = state.userdetails;
-            log("User details loaded from API");
-          } else if (state.status == UserDetailsStatus.failed) {
-            CM.showSnackBar(
-              context,
-              "Failed to load user details",
-              UIColours.errorColor,
-            );
-          }
-        },
-        child: BlocBuilder<UserDetailsBloc, UserDetailsAppState>(
+        backgroundColor: UIColours.white,
+        body: BlocBuilder<UserDetailsBloc, UserDetailsAppState>(
           bloc: userBloc,
           builder: (context, state) => state.status == UserDetailsStatus.busy
               ? Center(
@@ -94,11 +94,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             backgroundImage: NetworkImage('${user?.image}'),
                           ),
                         ),
-                        title:
-                            (user?.firstName ?? '') +
-                            ' ' +
-                            (user?.lastName ?? ''),
-                        subTitle: user?.email ?? '',
+                        title: '${user?.firstName} ${user?.lastName}',
+                        subTitle: user?.email,
                       ),
                       Text(
                         UIStrings.settingsGeneral,

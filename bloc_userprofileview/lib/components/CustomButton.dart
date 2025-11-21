@@ -1,3 +1,4 @@
+import 'package:bloc_userprofileview/components/CustomLoader.dart';
 import 'package:bloc_userprofileview/utils/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +29,7 @@ class CustomButton extends StatelessWidget {
         child: isLoading
             ? Transform.scale(
                 scale: 0.7,
-                child: CircularProgressIndicator(color: UIColours.white),
+                child: CustomLoader(color: UIColours.white),
               )
             : Text(
                 buttonText,

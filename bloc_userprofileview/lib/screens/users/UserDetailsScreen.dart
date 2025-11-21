@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../../utils/SharedPrefHelper.dart';
 import '../../components/CustomAppBar.dart';
 import '../../routes/routes.dart';
+import 'package:bloc_userprofileview/components/CustomUserDetailsTile.dart';
 
 class UserDetailsScreen extends StatefulWidget {
   const UserDetailsScreen({super.key});
@@ -117,47 +118,6 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget userInfoTile({
-    required String title,
-    required String value,
-    required IconData icon,
-  }) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: UISizes.mainSpacing),
-      child: Row(
-        spacing: UISizes.midSpacing,
-        crossAxisAlignment: .center,
-        children: [
-          Icon(
-            icon,
-            color: UIColours.primaryColor,
-            size: UISizes.titleFontSize * 1.2,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: TextStyle(
-                  fontSize: UISizes.tileSubtitle,
-                  color: UIColours.grey,
-                ),
-              ),
-              Text(
-                value,
-                style: TextStyle(
-                  fontSize: UISizes.tileTitle - 1,
-                  color: UIColours.black,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-        ],
       ),
     );
   }

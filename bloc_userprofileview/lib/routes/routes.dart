@@ -2,6 +2,7 @@ import 'package:bloc_userprofileview/screens/home/homepage.dart';
 import 'package:flutter/material.dart';
 import '../screens/auth/loginscreen.dart';
 import '../screens/auth/signupscreen.dart';
+import '../screens/users/AllUsersDetailsScreen.dart';
 import '../screens/users/EditUserDetailsScreen.dart';
 import '../screens/users/UserDetailsScreen.dart';
 
@@ -47,6 +48,16 @@ class Routes {
       MaterialPageRoute(
         builder: (context) => EditUserDetailsScreen(userid: user.id.toString()),
       ),
+    );
+  }
+
+  static navigateToAllUsersDetailsScreen(
+    BuildContext context, {
+    required num id,
+  }) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => AllUsersDetailsScreen(id: id)),
     );
   }
 }

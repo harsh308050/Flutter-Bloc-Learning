@@ -33,6 +33,7 @@ class CustomTile extends StatelessWidget {
       subtitle: subTitle != null
           ? Text(
               subTitle!,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: UISizes.tileSubtitle,
                 color: UIColours.grey,

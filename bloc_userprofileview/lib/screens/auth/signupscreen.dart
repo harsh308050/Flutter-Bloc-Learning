@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:bloc_userprofileview/components/CM.dart';
 import 'package:bloc_userprofileview/components/CustomAppBar.dart';
 import 'package:bloc_userprofileview/components/CustomProfile.dart';
-import 'package:bloc_userprofileview/components/GenderButton.dart';
+import 'package:bloc_userprofileview/components/CustomGenderButton.dart';
 import 'package:bloc_userprofileview/routes/routes.dart';
 import 'package:flutter/material.dart';
 import '../../components/CustomTile.dart';
